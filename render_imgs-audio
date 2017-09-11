@@ -1,0 +1,1 @@
+ffmpeg -r 15 -pattern_type glob -i *.png -i ../../hipno tecno 2.wav -c:v libx264 -c:a aac -pix_fmt yuv420p -crf 23 -r 24 -shortest -y video-from-frames.mp4

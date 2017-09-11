@@ -1,12 +1,13 @@
 #!/bin/bash
-# defo.sh -i IN_FOLDER -o OUT_FOLDER 
+# blur.sh -i IN_FOLDER -o OUT_FOLDER 
 
-while getopts i:o: option
+while getopts i:o:l: option
 do
  case "${option}"
  in
  i) IN_FOLDER=${OPTARG};;
  o) OUT_FOLDER=${OPTARG};;
+ l) LIMIT=${OPTARG};;
  esac
 done
 
@@ -14,18 +15,30 @@ done
 counter=0 
 
 for f in $IN_FOLDER/*.png; do 
-    let "counter+=1" 
     b=${f##*/}
     echo ${b}
     grad=$((${counter} % 360))
+    ocho=$((${counter} % 8))
+    half=0.005
+    half_c=$(expr $counter*$half| bc)
+    cent=0.01
+    cent_c=$(expr $counter*$cent | bc)
+    mili=0.001
+    mili_c=$(expr $counter*$mili | bc)
+
+    #echo ${deci_c}
+
     #convert ${f} -blur 2x6 $OUT_FOLDER/blur_${b} 
+
     convert ${f} \
-        -channel R -blur 8x8 \
-        -channel G -blur 2x2 -swirl ${grad} \
-        -channel B -radial-blur ${grad} \
+        -channel R -blur ${cent_c}x${cent_c} \
+        -channel G -blur ${mili_c}x${half_c} \
+        -channel B -blur ${mili_c}x${half_c} \
     $OUT_FOLDER/blur_${b} 
 
-    if [ ${counter} -gt 1000 ]
+    let "counter+=1" 
+
+    if [ ${counter} -gt ${LIMIT} ]
     then
 	    break
     fi
@@ -35,3 +48,4 @@ done
 
 
 
+#-channel G -blur 8x2 -swirl ${counter} \
