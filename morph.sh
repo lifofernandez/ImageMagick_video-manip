@@ -24,14 +24,19 @@ do
   prox=${files[$i+1]}
   #echo ${prev##*/} ${curr##*/} ${prox##*/}
   echo transicion: ${curr##*/} :::::: ${prox##*/}
-  convert ${curr} ${prox} -morph 10 \
-            -layers TrimBounds -set dispose previous -coalesce \
-            -background black -alpha remove \
-            -set delay '%[fx:(t>0&&t<n-1)?10:60]' \
-	    $OUT_FOLDER/morph_resize-${curr##*/}_${prox##*/}.gif
-            #-duplicate 1,-2-1 \
-	    #-loop 1 \
+  convert ${curr} ${prox} \
+	-morph 10 \
+	$OUT_FOLDER/morph_resize-${curr##*/}_${prox##*/}.gif
+#	-layers TrimBounds \
+#	-set dispose previous
+#	-coalesce \
+#        -background black
+#	-alpha remove \
+#        -set delay '%[fx:(t>0&&t<n-1)?10:60]' \
+        #-duplicate 1,-2-1 \
+	#-loop 1 \
 done
+gifsicle $OUT_FOLDER/* > morph_resizes.gif
 
 #for f in $IN_FOLDER/*.png; do 
 #    b=${f##*/}
