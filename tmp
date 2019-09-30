@@ -1,0 +1,528 @@
+ 
+Stack Overflow
+
+ 1. Products
+ 2. Customers
+ 3. Use cases
+
+ 1. Stack Overflow Public questions and answers
+ 2. Teams Private questions and answers for your team
+ 3. Enterprise Private self-hosted questions and answers for your enterprise
+ 4. Talent Hire technical talent
+ 5. Advertising Reach developers worldwide
+
+[                    ]
+Loading…
+ 1.  
+ 2. Log in Sign up
+ 3. current community
+
+      □  
+        Stack Overflow
+        help chat
+      □ 
+         
+        Meta Stack Overflow
+   
+    your communities
+
+    Sign up or log in to customize your list.
+
+    more stack exchange communities
+
+    company blog
+
+By using our site, you acknowledge that you have read and understand our Cookie
+Policy, Privacy Policy, and our Terms of Service.
+
+ 1. Home
+ 2.
+     1. Public
+     2. Stack Overflow
+     3. Tags
+     4. Users
+     5. Jobs
+ 3.
+     1. Teams
+        What’s this?
+       
+        Teams
+
+        Q&A for Work
+
+        Stack Overflow for Teams is a private, secure spot for you and your
+        coworkers to find and share information.
+
+        Learn more
+     2.  
+        First 10 Free
+
+Bash for loop get previous and next item
+
+Ask Question
+Asked 6 years, 10 months ago
+Active 1 year ago
+Viewed 6k times
+5
+
+I would like to do a loop and inside the loop get the previous and the next
+item.
+
+Currently, I am using the following loop:
+
+for file in $dir;do
+    [...do some things...]
+done
+
+Can I do things like in C, for example, file[i-1]/file[i+1] to get the previous
+and the next item? Is there any simple method to do this?
+
+bash loops
+share|improve this question
+edited Sep 25 '18 at 21:44
+ 
+[pho]
+Adam Starrh
+2,61844 gold badges2525 silver badges5555 bronze badges
+asked Dec 1 '12 at 11:37
+ 
+[202]
+GuillaumeGuillaume
+6,13199 gold badges4141 silver badges6060 bronze badges
+
+add a comment  |   
+
+2 Answers 2
+
+active oldest votes
+8
+
+declare -a files=(*)
+for (( i = 0; i < ${#files[*]}; ++ i ))
+do
+  echo ${files[$i-1]} ${files[$i]} ${files[$i+1]}
+done
+
+In the first iteration, the index -1 will print the last element and in the
+last iteration, the index max+1 will not print anything.
+
+share|improve this answer
+answered Dec 1 '12 at 11:57
+ 
+[843]
+VivekVivek
+1,26311 gold badge1212 silver badges2121 bronze badges
+
+  • 
+    My bash doesn't wrap the first -1 or last +1 though. – Iain Dec 1 '12 at
+    12:10
+  • 
+    last+1 will not be wrapped. first-1 should be, may be your bash version is
+    old, it works in bash version 4. – Vivek Dec 1 '12 at 12:18
+  • 
+    I misread the +1 case. My bash is 4.1.2(1) as supplied with CentOS 6.3.
+    Running your script in a directory with files a,b,c produces the following
+    output: a b\n a b c\n b c\n – Iain Dec 1 '12 at 12:53
+
+add a comment  |   
+0
+
+Try this:
+
+previous=
+current=
+for file in *; do
+  previous=$current
+  current=$next
+  next=$file
+  echo $previous \| $current \| $next
+  #process item
+done
+previous=$current
+current=$next
+next=
+echo $previous \| $current \| $next
+#process last item
+
+share|improve this answer
+edited Dec 1 '12 at 16:17
+answered Dec 1 '12 at 11:43
+ 
+[1d8]
+Pavel StrakhovPavel Strakhov
+31.8k44 gold badges6161 silver badges105105 bronze badges
+
+  • 
+    Use * in place of `ls`. – chepner Dec 1 '12 at 14:41
+
+add a comment  |   
+
+Your Answer
+
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+[                                                                                            ]
+
+Thanks for contributing an answer to Stack Overflow!
+
+  • Please be sure to answer the question. Provide details and share your
+    research!
+
+But avoid …
+
+  • Asking for help, clarification, or responding to other answers.
+  • Making statements based on opinion; back them up with references or
+    personal experience.
+
+To learn more, see our tips on writing great answers.
+
+draft saved
+draft discarded
+[                    ]
+
+Sign up or log in
+
+Sign up using Google
+Sign up using Facebook
+Sign up using Email and Password
+[Submit]
+
+Post as a guest
+
+Name
+[                    ]
+Email
+
+Required, but never shown
+
+[                                        ]
+
+Post as a guest
+
+Name
+[                    ]
+Email
+
+Required, but never shown
+
+[                                        ]
+Post Your Answer Discard
+
+By clicking “Post Your Answer”, you agree to our terms of service, privacy
+policy and cookie policy
+
+Not the answer you're looking for? Browse other questions tagged bash loops or 
+ask your own question.
+
+Blog
+
+  •  
+    Research update: Improving the question-asking experience
+
+  •  
+    Job Hunting: How to Find Your Next Step by Taking Your Search Offline
+
+Featured on Meta
+
+  •  
+    Stack Exchange and Stack Overflow are moving to CC BY-SA 4.0
+
+  •  
+    Unicorn Meta Zoo #9: How do we handle problem users?
+
+  •  
+    2020 Developer Survey: any topic suggestions?
+
+  •  
+    Moderator Resignation Notice
+
+Visit chat
+
+Related
+
+ 
+4583
+Get the source directory of a Bash script from within the script itself
+ 
+3236
+Accessing the index in 'for' loops?
+ 
+1984
+How to check if a program exists from a Bash script?
+ 
+3024
+How do I tell if a regular file does not exist in Bash?
+ 
+2643
+How do I loop through or enumerate a JavaScript object?
+ 
+2656
+JavaScript closure inside loops – simple practical example
+ 
+1206
+Looping through the content of a file in Bash
+ 
+2890
+Loop through an array in JavaScript
+ 
+2550
+How to concatenate string variables in Bash
+ 
+1456
+How do I set a variable to the output of a command in Bash?
+
+Hot Network Questions
+
+  • 
+    Determine the Winner of a Game of Australian Football
+  • 
+    Who became a professor?
+  • 
+    What is the next number in the sequence 21, 21, 23, 20, 5, 25, 31, 24, ...?
+  • 
+    What should I do if I find a mistake in my submitted master's thesis?
+  • 
+    How can three vectors be orthogonal to each other?
+  • 
+    Is there a difference between historical fiction and creative non-fiction?
+  • 
+    Power Adapter for Traveling to Scotland (I live in the US)
+  • 
+    Applying UK Visit Visa Application from AU
+  • 
+    Had there been instances of national states banning harmful imports before
+    the Opium wars?
+  • 
+    In 1700s, why was 'books that never read' grammatical?
+  • 
+    Spiral Stumper Series: Instructionless Puzzle
+  • 
+    How do I adjust the cooking time on a baked rice dish if I cut the recipe
+    in half?
+  • 
+    Where can I find Armory 92.3 for download?
+  • 
+    Can I voluntarily exit from the US after a 20 year overstay, or could I be
+    detained at the airport?
+  • 
+    Persevering Through Very Difficult Periods
+  • 
+    A goat is tied to the corner of a shed
+  • 
+    How to accompany with piano in latin music when given only chords?
+  • 
+    As a girl, how can I voice male characters effectively?
+  • 
+    How to explain that the sums of numerators over sums of denominators isn't
+    the same as the mean of ratios?
+  • 
+    I've been fired, was allowed to announce it as if I quit and given extra
+    notice, how to handle the questions?
+  • 
+    Find the percentage
+  • 
+    The work of mathematicians outside their professional environment
+  • 
+    Why is the final chapter of "The Midwich Cuckoos" entitled "Zellaby of
+    Macedon"?
+  • 
+    What does the whole letter in Black Panther by Prince NJobu say?
+
+more hot questions
+Question feed
+
+Subscribe to RSS
+
+Question feed
+
+To subscribe to this RSS feed, copy and paste this URL into your RSS reader.
+
+[https://stackoverflo]
+ 
+*
+lang-sh
+ 
+
+Stack Overflow
+
+  • Questions
+  • Jobs
+  • Developer Jobs Directory
+  • Salary Calculator
+  • Help
+  • Mobile
+
+Products
+
+  • Teams
+  • Talent
+  • Advertising
+  • Enterprise
+
+Company
+
+  • About
+  • Press
+  • Work Here
+  • Legal
+  • Privacy Policy
+  • Contact Us
+
+ 
+
+Stack Exchange
+Network
+
+  • Technology
+  • Life / Arts
+  • Culture / Recreation
+  • Science
+  • Other
+
+  • Stack Overflow
+  • Server Fault
+  • Super User
+  • Web Applications
+  • Ask Ubuntu
+  • Webmasters
+  • Game Development
+
+  • TeX - LaTeX
+  • Software Engineering
+  • Unix & Linux
+  • Ask Different (Apple)
+  • WordPress Development
+  • Geographic Information Systems
+  • Electrical Engineering
+
+  • Android Enthusiasts
+  • Information Security
+  • Database Administrators
+  • Drupal Answers
+  • SharePoint
+  • User Experience
+  • Mathematica
+
+  • Salesforce
+  • ExpressionEngine® Answers
+  • Stack Overflow em Português
+  • Blender
+  • Network Engineering
+  • Cryptography
+  • Code Review
+
+  • Magento
+  • Software Recommendations
+  • Signal Processing
+  • Emacs
+  • Raspberry Pi
+  • Stack Overflow на русском
+  • Code Golf
+
+  • Stack Overflow en español
+  • Ethereum
+  • Data Science
+  • Arduino
+  • Bitcoin
+  • Software Quality Assurance & Testing
+  • Sound Design
+
+  • Windows Phone
+  • more (27)
+
+  • Photography
+  • Science Fiction & Fantasy
+  • Graphic Design
+  • Movies & TV
+  • Music: Practice & Theory
+  • Worldbuilding
+  • Video Production
+
+  • Seasoned Advice (cooking)
+  • Home Improvement
+  • Personal Finance & Money
+  • Academia
+  • Law
+  • Physical Fitness
+  • Gardening & Landscaping
+
+  • Parenting
+  • more (11)
+
+  • English Language & Usage
+  • Skeptics
+  • Mi Yodeya (Judaism)
+  • Travel
+  • Christianity
+  • English Language Learners
+  • Japanese Language
+
+  • Chinese Language
+  • French Language
+  • German Language
+  • Biblical Hermeneutics
+  • History
+  • Spanish Language
+  • Islam
+
+  • Русский язык
+  • Russian Language
+  • Arqade (gaming)
+  • Bicycles
+  • Role-playing Games
+  • Anime & Manga
+  • Puzzling
+
+  • Motor Vehicle Maintenance & Repair
+  • Board & Card Games
+  • Bricks
+  • Homebrewing
+  • Martial Arts
+  • The Great Outdoors
+  • Poker
+
+  • Chess
+  • Sports
+  • more (16)
+
+  • MathOverflow
+  • Mathematics
+  • Cross Validated (stats)
+  • Theoretical Computer Science
+  • Physics
+  • Chemistry
+  • Biology
+
+  • Computer Science
+  • Philosophy
+  • Linguistics
+  • Psychology & Neuroscience
+  • Computational Science
+  • more (8)
+
+  • Meta Stack Exchange
+  • Stack Apps
+  • API
+  • Data
+
+  • Blog
+  • Facebook
+  • Twitter
+  • LinkedIn
+
+site design / logo © 2019 Stack Exchange Inc; user contributions licensed under
+cc by-sa 4.0 with attribution required. rev 2019.9.29.35057
+
+Stack Overflow works best with JavaScript enabled [p-c1rF4kxg]
