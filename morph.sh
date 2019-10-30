@@ -22,13 +22,19 @@ do
 	-layers TrimBounds \
 	-set dispose previous \
 	$OUT_FOLDER/morph_resize-${curr##*/}_${prox##*/}.gif
-#	-coalesce \
 #       -background black \
 #	-alpha remove \
-#       -set delay '%[fx:(t>0&&t<n-1)?10:60]' \
-#	-duplicate 1,-2-1 \
+#	-coalesce \
 #	-loop 1 \
+#	-set delay '%[fx:(t>0&&t<n-1)?10:60]' \
+#	-duplicate 1,-2-1 \
 done
-gifsicle --merge $OUT_FOLDER/* -o morph_resizes.gif
+
+gifsicle --delay 0 --merge $OUT_FOLDER/* -o morph_resizes.gif
+gifsicle morph_resizes.gif "#-1-0" -o morph_reverse.gif
+gifsicle --delay 0 --merge morph_resizes.gif morph_reverse.gif -o morph_pingpong.gif
+
+ffmpeg -i morph_pingpong.gif -movflags faststart -pix_fmt yuv420p -vf 'scale=trunc(iw/2)*2:trunc(ih/2)*2' morph.mp4
+
 
 
