@@ -13,7 +13,7 @@ done
 
 counter=0 
 
-for f in $IN_FOLDER/*.png; do 
+for f in $IN_FOLDER/*; do 
     let "counter+=1" 
     b=${f##*/}
     echo ${b}

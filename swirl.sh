@@ -13,16 +13,13 @@ done
 
 counter=0 
 
-for f in $IN_FOLDER/*.png; do 
+for f in $IN_FOLDER/*; do 
     let "counter+=1" 
     b=${f##*/}
     echo ${b}
 
     convert ${f} -virtual-pixel Transparent \
-        -distort DePolar -1 $OUT_FOLDER/depolar_${b} 
-    convert  $OUT_FOLDER/depolar_${b} -virtual-pixel HorizontalTile -background None \
-        -distort Polar -1 $OUT_FOLDER/cycled_${b} 
-
+        -swirl ${counter} $OUT_FOLDER/depolar_${b} 
     if [ ${counter} -gt 100 ]
     then
 	    break
