@@ -22,7 +22,7 @@ do
 	-layers TrimBounds \
 	-set dispose previous \
 	$OUT_FOLDER/morph_resize-${curr##*/}_${prox##*/}.gif
-#       -background black \
+#      -background black \
 #	-alpha remove \
 #	-coalesce \
 #	-loop 1 \
